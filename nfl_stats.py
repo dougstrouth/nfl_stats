@@ -1,23 +1,51 @@
 # import packages
+import nfl_data_py as nfl  # load data
 import pandas as pd
-
 import plotly.graph_objects as go
-import nfl_data_py as nfl# load data
+
+
+'''
+How to combine data from multiple years
+
+pbp data is by play
+roster is just the player info
+
+so you have to specify what facet of the play you want to quantify
+
+
+
+'''
 
 
 
 
-year = 2022
-df = nfl.import_pbp_data([year])
-df_players = nfl.import_rosters([year])
 df_teams = nfl.import_team_desc()
 
-column_names = df.columns.values.tolist()
+
+
+year1 =1999 
+year2 =2020
+
+
+main_df = {}
+
+
+while year1<=year2:
+    df = nfl.import_pbp_data([year1])
+    df_players = nfl.import_rosters([year1])
+
+    year1+=1
+
+
+v
+
+
+'''column_names = df.columns.values.tolist()
 print(column_names)
 
 column_names = df_players.columns.values.tolist()
 print(column_names)
-
+'''
 
 
 df = df.merge(df_players[["player_id", "player_name"]], left_on="rusher_player_id", right_on="player_id")
@@ -26,7 +54,7 @@ df = df.merge(df_teams[["team_abbr", "team_color"]], left_on="posteam", right_on
 
 # remove no plays
 df = df[df["play_type"] != "no_play"]
-df.to_csv(str(year)+'_nfl_season_out.csv')  
+df.to_csv("C:/Users/user/Documents/Code/APIs/large_data/NFL/"+str(year)+'_nfl_season_out.csv')  
 
 
 
@@ -43,7 +71,7 @@ print(df_agg)
 
 fig = go.Figure()
 for name, values in df_agg.groupby("player_name"):
-    if values["passing_yards"].sum() > 1500:
+    if values["rushing_yards"].sum() > 1000:
         fig.add_trace(
             go.Scatter(
                 x=values["week"], 
