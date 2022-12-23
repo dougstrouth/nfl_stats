@@ -19,13 +19,11 @@ Top R/P yards by week by team:graph
 Top R/P yards by week by player:graph
 
 rpp center run
-`
+
 
 Questions or open items
 How are penalty yards gained listed?
 add in a filter by list of teams
-
-
 
 if season specified then groupby week else group by season
 
@@ -36,7 +34,7 @@ update = False
 df_teams = nfl.import_team_desc()
 
 
-years = [1999, 2000,2001] 
+years = [1999,2000,2001] 
 ''',2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
          2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
 '''
