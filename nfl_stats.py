@@ -19,7 +19,7 @@ Top R/P yards by week by team:graph
 Top R/P yards by week by player:graph
 
 rpp center run
-
+`
 
 Questions or open items
 How are penalty yards gained listed?
@@ -36,7 +36,7 @@ update = False
 df_teams = nfl.import_team_desc()
 
 
-years = [1999, 2000] 
+years = [1999, 2000,2001] 
 ''',2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
          2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
 '''
@@ -51,7 +51,7 @@ if update:
 
     # Merge in the player and team information
     df = df.merge(df_players[["player_id", "player_name", "season"]], left_on=[
-        "rusher_player_id", "season"], right_on=["player_id", "season"])
+        "passing_player_id", "season"], right_on=["player_id", "season"])
 
     # join with team table to get team color for plot
     df = df.merge(df_teams[["team_abbr", "team_color"]],
@@ -89,11 +89,11 @@ Graphing section
 
 fig = go.Figure()
 for name, values in df_agg.groupby("player_name"):
-    if values["rushing_yards"].sum() > 1000:
+    if values["passing_yards"].sum() > 10:
         fig.add_trace(
             go.Scatter(
                 x=values["season"], 
-                y=values["rushing_yards"].cumsum(), 
+                y=values["passing_yards"].cumsum(), 
                 name=name, 
                 mode="markers+lines", 
                 line_color=values.iloc[0].team_color,
